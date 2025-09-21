@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { motion } from 'framer-motion';
-// Using emoji instead of react-icons for better compatibility
+import { FiMessageSquare, FiCopy, FiSave, FiRefreshCw, FiDownload, FiUpload, FiBarChart2, FiSettings, FiTrash2, FiChevronDown, FiChevronUp, FiSun, FiMoon } from 'react-icons/fi';
+import type { IconType } from 'react-icons';
 import { aiService } from '../services/aiService';
 import { storageService, StoredMessage } from '../services/storageService';
 import AnalyticsDashboard from './AnalyticsDashboard';
-import ParticleBackground from './ParticleBackground';
+import Illustration from './Illustration';
+import { useTheme } from '../contexts/ThemeContext';
 import 'react-toastify/dist/ReactToastify.css';
 import './MessageGenerator.css';
 import './EnhancedStyles.css';
@@ -26,7 +28,13 @@ interface Category {
 }
 
 
+// Helper component to render icons properly
+const renderIcon = (IconComponent: IconType, className?: string) => {
+  return React.createElement(IconComponent as any, { className });
+};
+
 const MessageGenerator: React.FC = () => {
+  const { theme, toggleTheme, isDark } = useTheme();
   const [prompt, setPrompt] = useState('');
   const [generatedMessage, setGeneratedMessage] = useState<GeneratedMessage | null>(null);
   const [editableMessage, setEditableMessage] = useState('');
@@ -202,7 +210,7 @@ const MessageGenerator: React.FC = () => {
 
   return (
     <div className="message-generator-container">
-      <ParticleBackground />
+      <Illustration />
       <ToastContainer 
         position="top-right" 
         autoClose={3000}
@@ -238,12 +246,23 @@ const MessageGenerator: React.FC = () => {
             
             <div className="header-actions">
               <motion.button
+                onClick={toggleTheme}
+                className={`header-btn theme-btn ${isDark ? 'dark-theme' : 'light-theme'}`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+              >
+                {renderIcon(isDark ? FiSun : FiMoon)}
+                {isDark ? 'Light' : 'Dark'}
+              </motion.button>
+              <motion.button
                 onClick={() => setShowAnalytics(!showAnalytics)}
                 className="header-btn analytics-btn"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-📊 Analytics
+                {renderIcon(FiBarChart2)}
+                Analytics
               </motion.button>
               <motion.button
                 onClick={() => setShowSettings(!showSettings)}
@@ -251,7 +270,8 @@ const MessageGenerator: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-⚙️ Settings
+                {renderIcon(FiSettings)}
+                Settings
               </motion.button>
               <motion.button
                 onClick={exportData}
@@ -259,7 +279,8 @@ const MessageGenerator: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-💾 Export
+                {renderIcon(FiDownload)}
+                Export
               </motion.button>
             </div>
           </div>
@@ -378,7 +399,8 @@ const MessageGenerator: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-📋 Copy
+                    {renderIcon(FiCopy)}
+                    Copy
                   </motion.button>
                   
                   {hasEdits && (
@@ -390,7 +412,8 @@ const MessageGenerator: React.FC = () => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      💾 Save Edit
+                      {renderIcon(FiSave)}
+                      Save Edit
                     </motion.button>
                   )}
                 </div>

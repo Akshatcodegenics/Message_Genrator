@@ -1,9 +1,18 @@
-.App {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px 0;
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 35%, #bfdbfe 70%, #93c5fd 100%);
+  transition: background 0.3s ease;
 }
 
-* {
-  box-sizing: border-box;
+/* Dark mode background */
+body.dark {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 35%, #334155 70%, #475569 100%);
+}
+
+.App {
+  text-align: center;
+  min-height: 100vh;
 }
