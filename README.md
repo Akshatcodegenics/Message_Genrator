@@ -289,7 +289,7 @@ Need help? Here are your options:
 
 ---
 
-Made with ❤️ by the AI Message Generator Team
+Made with ❤️ by Akshat
 
 **🎉 Star this repository if you find it useful!**
 
